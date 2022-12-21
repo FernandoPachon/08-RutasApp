@@ -1,30 +1,21 @@
-import React from 'react'
-import { View,Text,StyleSheet,Button,Platform } from 'react-native'
-import { check,PERMISSIONS,PermissionStatus,request  } from 'react-native-permissions';
+import React,{useContext} from 'react'
+import { View,Text,StyleSheet,Platform } from 'react-native'
+import { PermissionsContext } from '../context/PermissionsContext';
+import BlackButtom from '../components/BlackButtom';
 
 
 
 export const PermisionsScreen = () => {
-    let permissionStatus: PermissionStatus 
-    const checkLocationPermission = async()=>{
-        if (Platform.OS === 'ios'){
-
-           // permissionStatus = await check (PERMISSIONS.ANDROID.LOCATION_WHEN_IN_USE)
-        }else{
-           // permissionStatus = await check (PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-            permissionStatus = await request (PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-        }
-       console.log({permissionStatus});
-       
-    }
-
+    const {permissions,askLocationPermission} = useContext(PermissionsContext)
+  
   return (
 <View style={styles.container}>
      <Text>PermisionsScreen </Text>
-     <Button
+     <BlackButtom
         title='Permiso'
-        onPress={checkLocationPermission}
+        onPress={askLocationPermission}
      />
+     <Text>{JSON.stringify(permissions,null,5)}</Text>
 </View>
  )
 };
